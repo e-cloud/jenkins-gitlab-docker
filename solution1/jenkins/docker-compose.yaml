@@ -1,0 +1,49 @@
+version: "3"
+
+networks:
+  jenkins:
+    external: true
+  my-net:
+    external: true
+
+services:
+  jenkins-blueocean:
+    container_name: jenkins-blueocean
+    # environment:
+    #   DOCKER_HOST: tcp://docker:2376
+    #   DOCKER_CERT_PATH: /certs/client
+    #   DOCKER_TLS_VERIFY: 1
+    image: my-jenkins-blueocean:1.1
+    restart: always
+    networks:
+      - jenkins
+      - my-net
+    ports:
+      - '8080:8080'
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - 'jenkins-data:/var/jenkins_home'
+      - 'jenkins-docker-certs:/certs/client:ro'
+
+  # jenkins-docker:
+  #   container_name: jenkins-docker
+  #   command: --storage-driver=overlay2
+  #   environment:
+  #     DOCKER_CERT_PATH: /certs/client
+  #   privileged: true
+  #   networks:
+  #     jenkins:
+  #       aliases:
+  #         - docker
+  #   ports:
+  #     - '2376:2376'
+  #   image: docker:dind
+  #   volumes:
+  #     - 'jenkins-data:/var/jenkins_home'
+  #     - 'jenkins-docker-certs:/certs/client'
+
+volumes:
+  jenkins-data:
+    external: true
+  jenkins-docker-certs:
+    external: true

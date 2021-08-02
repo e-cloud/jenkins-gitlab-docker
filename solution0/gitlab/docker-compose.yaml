@@ -1,0 +1,26 @@
+version: "3"
+
+networks:
+  my-net:
+    external: true
+
+services:
+    gitlab:
+      container_name: gitlab-web
+      image: 'gitlab/gitlab-ee:latest'
+      restart: always
+      hostname: 'gitlab.example.com'
+      networks:
+        - gitlab
+        - my-net
+      environment:
+        GITLAB_OMNIBUS_CONFIG: |
+          external_url 'http://gitlab.example.com'
+          # Add any other gitlab.rb configuration here, each on its own line
+      ports:
+        - '80:80'
+        - '22:22'
+      volumes:
+        - '${GITLAB_HOME}/config:/etc/gitlab'
+        - '${GITLAB_HOME}/logs:/var/log/gitlab'
+        - '${GITLAB_HOME}/data:/var/opt/gitlab'

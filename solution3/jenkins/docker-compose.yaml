@@ -1,0 +1,30 @@
+version: "3"
+
+networks:
+  jenkins:
+    external: true
+  my-net:
+    external: true
+
+services:
+  jenkins-blueocean:
+    build:
+      context: ./
+      args:
+          HOST_GID: ${HOST_GID}
+    container_name: jenkins-blueocean
+    image: my-jenkins-blueocean:1.1
+    restart: unless-stopped
+    networks:
+      - jenkins
+      - my-net
+    ports:
+      - '8080:8080'
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - 'jenkins-data:/var/jenkins_home'
+      - 'jenkins-docker-certs:/certs/client:ro'
+
+volumes:
+  jenkins-data:
+  jenkins-docker-certs:
