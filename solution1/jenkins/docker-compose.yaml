@@ -1,8 +1,6 @@
 version: "3"
 
 networks:
-  jenkins:
-    external: true
   my-net:
     external: true
 
@@ -16,14 +14,13 @@ services:
     image: my-jenkins-blueocean:1.1
     restart: always
     networks:
-      - jenkins
       - my-net
     ports:
       - '8080:8080'
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
       - 'jenkins-data:/var/jenkins_home'
-      - 'jenkins-docker-certs:/certs/client:ro'
+      # - 'jenkins-docker-certs:/certs/client:ro'
 
   # jenkins-docker:
   #   container_name: jenkins-docker
@@ -42,8 +39,8 @@ services:
   #     - 'jenkins-data:/var/jenkins_home'
   #     - 'jenkins-docker-certs:/certs/client'
 
-volumes:
-  jenkins-data:
-    external: true
-  jenkins-docker-certs:
-    external: true
+# volumes:
+#   jenkins-data:
+#     external: true
+#   jenkins-docker-certs:
+#     external: true

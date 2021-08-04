@@ -3,3 +3,8 @@
 Inherits from solution 3 and inspired by https://itnext.io/docker-inside-docker-for-jenkins-d906b7b5f527,
 
 build the jenkins image a new way.
+
+```
+docker-compose build
+docker-compose up -d
+```

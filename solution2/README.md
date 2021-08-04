@@ -8,6 +8,8 @@ Inspired by [this answer](https://stackoverflow.com/a/59537295/3326749), again, 
 docker exec -it --user root jenkins-blueocean bash -c 'groupadd -g $(getent group docker | cut -d: -f3) docker && usermod -aG docker jenkins'
 ```
 
+and restart the container.
+
 The command adds a group `docker` with the same gid from host environment (where the original docker installation lives). Then restart the container.
 
 Now the jenkins service started by User `jenkins` inside the container, has permission to operate on resources of group `docker`. Since `/var/run/docker.sock` mounted is a resource  ruled by group docker outside. Both groups `docker` share the same gid, operations inside is feasible now.
@@ -19,4 +21,4 @@ Now the jenkins service started by User `jenkins` inside the container, has perm
 
 ## Conclusion
 
-It's too risky to expose docker to any visitor.
+It's better but not perfect enough

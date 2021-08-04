@@ -28,6 +28,8 @@ To verify the permission problem quickly, The following command was adopted
 docker exec -u root jenkins-blueocean /bin/chmod -v a+s $(which docker)
 ```
 
+> `curl --unix-socket /var/run/docker.sock http://localhost/images/json` to test connection
+
 ## Conclusion
 
 It's too risky to expose docker to any visitor.
